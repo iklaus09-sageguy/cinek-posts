@@ -18,7 +18,7 @@ import json, subprocess, sys, time, datetime, pathlib, urllib.parse
 ROOT = pathlib.Path(__file__).resolve().parent
 FILA = ROOT / "fila.json"
 IG_USER = "17841480915773202"  # @100porcentocinema
-API = "https://graph.facebook.com/v21.0"
+API = "https://graph.instagram.com/v21.0"  # token do login do Instagram so vale aqui
 RAW = "https://raw.githubusercontent.com/iklaus09-sageguy/cinek-posts/main/"
 
 
