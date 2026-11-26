@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Publica o proximo item da fila no Instagram @CineK (preencher o @).
+"""Publica o proximo item da fila no Instagram @100porcentocinema (CineK).
 
 Uso:
   python3 publicar.py            # sincroniza a fila e publica o proximo item pendente
@@ -17,7 +17,7 @@ import json, subprocess, sys, time, datetime, pathlib, urllib.parse
 
 ROOT = pathlib.Path(__file__).resolve().parent
 FILA = ROOT / "fila.json"
-IG_USER = ""  # ID da conta do Instagram do CineK (preencher quando a Meta liberar o acesso)
+IG_USER = "17841480915773202"  # @100porcentocinema
 API = "https://graph.facebook.com/v21.0"
 RAW = "https://raw.githubusercontent.com/iklaus09-sageguy/cinek-posts/main/"
 
