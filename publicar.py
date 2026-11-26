@@ -10,10 +10,10 @@ Conteudo novo: crie uma pasta em videos/NN-slug/ (video.mp4 + legenda.txt)
 ou posts/NNN-slug/ (post.jpg + legenda.txt) e faca push. Ela entra na fila
 automaticamente como "pendente", na ordem do nome da pasta.
 
-O token da Meta NAO fica aqui: o proxy da sessao injeta o header Authorization
-nas chamadas para graph.facebook.com.
+O token da Meta NAO fica aqui: ele vem da variavel de ambiente IG_TOKEN
+(configurada no ambiente de nuvem "CineK"). Nunca imprima o token.
 """
-import json, subprocess, sys, time, datetime, pathlib, urllib.parse
+import os, json, subprocess, sys, time, datetime, pathlib, urllib.parse
 
 ROOT = pathlib.Path(__file__).resolve().parent
 FILA = ROOT / "fila.json"
@@ -24,10 +24,13 @@ RAW = "https://raw.githubusercontent.com/iklaus09-sageguy/cinek-posts/main/"
 
 def graph(method, path, params=None):
     url = f"{API}/{path}"
-    cmd = ["curl", "-sS", "-H", "Authorization: Bearer proxy-injected"]
+    token = os.environ.get("IG_TOKEN", "").strip()
+    if not token:
+        raise RuntimeError("TOKEN AUSENTE: defina IG_TOKEN no ambiente de nuvem CineK")
+    params = dict(params or {}, access_token=token)
+    cmd = ["curl", "-sS"]
     if method == "GET":
-        if params:
-            url += "?" + urllib.parse.urlencode(params)
+        url += "?" + urllib.parse.urlencode(params)
     else:
         cmd += ["-X", "POST"]
         for k, v in (params or {}).items():
